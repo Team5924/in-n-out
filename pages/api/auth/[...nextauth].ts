@@ -21,11 +21,6 @@ export const authOptions: NextAuthOptions = {
     maxAge: 86400,
     updateAge: 3600,
   },
-  callbacks: {
-    async signIn() {
-      return "/hours";
-    },
-  },
 };
 
 export default NextAuth(authOptions);

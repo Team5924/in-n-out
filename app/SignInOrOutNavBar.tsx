@@ -3,7 +3,6 @@
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import { redirect } from "next/navigation";
 
 export type NavBarItem = {
   name: string;
@@ -37,13 +36,7 @@ export default function SignInOrOutNavBar({
           {isSignInBar ? (
             <p
               className="mx-6 text-xl font-bold transition-colors hover:text-yellow-300"
-              onClick={() => {
-                if (status === "authenticated") {
-                  redirect("/hours");
-                } else {
-                  void signIn("google");
-                }
-              }}
+              onClick={() => signIn("google")}
             >
               Sign In
             </p>
