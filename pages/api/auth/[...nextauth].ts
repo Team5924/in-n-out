@@ -16,13 +16,15 @@ export const authOptions: NextAuthOptions = {
   ],
   // @ts-ignore
   adapter: PrismaAdapter(prisma),
-  theme: {
-    logo: "http://localhost:3000/in-n-out.png",
-  },
   session: {
     strategy: "database",
     maxAge: 86400,
     updateAge: 3600,
+  },
+  callbacks: {
+    async signIn() {
+      return "/hours";
+    },
   },
 };
 

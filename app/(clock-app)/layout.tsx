@@ -1,14 +1,28 @@
 import React from "react";
-import NavBar, { NavBarItem } from "@/app/NavBar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { redirect } from "next/navigation";
+import SignInOrOutNavBar from "@/app/SignInOrOutNavBar";
 
-export default function ClockAppLayout({
+export default async function ClockAppLayout({
   children, // will be a page or nested layout
 }: {
   children: React.ReactNode;
 }) {
-  const navBarItems: NavBarItem[] = [
+  const navBarItems = [
     { name: "Hours", href: "/hours" },
     { name: "Leaderboard", href: "/leaderboard" },
   ];
-  return <NavBar navBarItems={navBarItems} itemsStartLeft={true}></NavBar>;
+
+  const session = await getServerSession(authOptions);
+  if (session) {
+    return (
+      <SignInOrOutNavBar
+        navBarItems={navBarItems}
+        isSignInBar={false}
+      ></SignInOrOutNavBar>
+    );
+  } else {
+    redirect("/");
+  }
 }
