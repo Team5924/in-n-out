@@ -14,9 +14,9 @@ export default function Home() {
         <Image
           src={inNOutLogo}
           alt="In-N-Out Logo"
-          className="w-2/3 sm:w-1/2 lg:w-1/3"
+          className="w-2/3 animate-fade-in sm:w-1/2 lg:w-1/3"
         ></Image>
-        <h1 className="text-4xl font-bold text-yellow-300 sm:text-5xl lg:text-6xl">
+        <h1 className="animate-fade-in text-4xl font-bold text-yellow-300 sm:text-5xl lg:text-6xl">
           In-N-Out Hour Tracker
         </h1>
       </div>
