@@ -17,10 +17,13 @@ export default async function ClockAppLayout({
   const session = await getServerSession(authOptions);
   if (session) {
     return (
-      <SignInOrOutNavBar
-        navBarItems={navBarItems}
-        isSignInBar={false}
-      ></SignInOrOutNavBar>
+      <div className="flex min-h-screen flex-col">
+        <SignInOrOutNavBar
+          navBarItems={navBarItems}
+          isSignInBar={false}
+        ></SignInOrOutNavBar>
+        {children}
+      </div>
     );
   } else {
     redirect("/");
