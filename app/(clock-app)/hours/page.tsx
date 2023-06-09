@@ -10,7 +10,7 @@ export default async function Hours() {
           Hello {session.user?.name?.split(" ")[0]},
         </h2>
         <h3 className="text-4xl font-bold">You have</h3>
-        <h3 className="py-3 text-8xl font-extrabold">69</h3>
+        <h1 className="py-3 text-8xl font-extrabold">69</h1>
         <h3 className="text-4xl font-bold">Hours</h3>
       </div>
     );
