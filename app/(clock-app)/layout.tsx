@@ -22,7 +22,10 @@ export default async function ClockAppLayout({
       select: { isAdmin: true },
     })) ?? { isAdmin: false };
     if (isAdmin) {
-      navBarItems.push({ name: "Admin", href: "/admin" });
+      navBarItems.push(
+        { name: "Admin", href: "/admin" },
+        { name: "Clock-In/Out Terminal", href: "/terminal" }
+      );
     }
     return (
       <div className="flex min-h-screen flex-col">
