@@ -26,7 +26,7 @@ export default function SignInOrOutNavBar({
             <Link
               key={index}
               href={navBarItem.href}
-              className="mx-6 text-xl font-bold transition-colors hover:text-yellow-300"
+              className="mx-7 text-xl font-bold transition-colors hover:text-yellow-300"
             >
               {navBarItem.name}
             </Link>
@@ -35,7 +35,7 @@ export default function SignInOrOutNavBar({
         <div>
           {isSignInBar ? (
             <p
-              className="mx-6 text-xl font-bold transition-colors hover:text-yellow-300"
+              className="mx-7 text-xl font-bold transition-colors hover:text-yellow-300"
               onClick={() => signIn("google")}
             >
               Sign In
