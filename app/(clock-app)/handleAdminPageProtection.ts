@@ -16,4 +16,5 @@ export default async function handleAdminPageProtection() {
   } else {
     redirect("/");
   }
+  return session;
 }

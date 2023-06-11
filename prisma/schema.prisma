@@ -58,9 +58,9 @@ model VerificationToken {
 }
 
 model Shift {
-  id         String   @id @default(uuid())
-  shiftStart DateTime
-  shiftEnd   DateTime
-  user       User     @relation(fields: [userId], references: [id])
+  id         String    @id @default(uuid())
+  shiftStart DateTime  @default(now())
+  shiftEnd   DateTime?
+  user       User      @relation(fields: [userId], references: [id])
   userId     String
 }
