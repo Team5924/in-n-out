@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getHours } from "@/app/actions";
 
 export default async function Hours() {
   const session = await getServerSession(authOptions);
@@ -10,8 +11,10 @@ export default async function Hours() {
         Hello {session?.user?.name?.split(" ")[0]},
       </h2>
       <h3 className="text-4xl font-bold">You have</h3>
-      <h1 className="py-3 text-8xl font-extrabold">69</h1>
-      <h3 className="text-4xl font-bold">Hours</h3>
+      <h1 className="py-3 text-8xl font-extrabold">
+        {await getHours(session?.user?.email ?? "")}
+      </h1>
+      <h3 className="text-4xl font-bold">hours</h3>
     </div>
   );
 }

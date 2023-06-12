@@ -29,3 +29,34 @@ export async function toggleClockStatus(userEmail: string) {
     });
   }
 }
+
+export async function getHours(userEmail: string) {
+  const user = await prisma.user.findUnique({
+    where: { email: userEmail },
+    include: { shifts: true },
+  });
+
+  const millisecondsClocked = user?.shifts.reduce(
+    (accumulatedMilliseconds, shift) => {
+      if (shift.shiftEnd) {
+        return (
+          accumulatedMilliseconds +
+          shift.shiftEnd.getTime() -
+          shift.shiftStart.getTime()
+        );
+      } else {
+        return (
+          accumulatedMilliseconds + Date.now() - shift.shiftStart.getTime()
+        );
+      }
+    },
+    0
+  );
+
+  if (millisecondsClocked) {
+    const hoursClocked = millisecondsClocked / 1000 / 60 / 60;
+    return hoursClocked.toFixed(1);
+  } else {
+    return 0;
+  }
+}
