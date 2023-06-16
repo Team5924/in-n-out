@@ -12,7 +12,7 @@ export default async function Home() {
   } else {
     return (
       <div>
-        <SignInOrOutNavBar isSignInBar={true}></SignInOrOutNavBar>
+        <SignInOrOutNavBar></SignInOrOutNavBar>
         <div className="flex flex-col items-center">
           <Image
             src={inNOutLogo}

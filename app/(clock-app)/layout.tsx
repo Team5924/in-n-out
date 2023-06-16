@@ -31,7 +31,9 @@ export default async function ClockAppLayout({
       <div className="flex min-h-screen flex-col">
         <SignInOrOutNavBar
           navBarItems={navBarItems}
-          isSignInBar={false}
+          signOutProfileImageSrc={
+            session?.user?.image ?? "/public/default-pfp.png"
+          }
         ></SignInOrOutNavBar>
         {children}
       </div>
