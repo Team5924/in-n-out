@@ -1,4 +1,3 @@
-import handleAdminPageProtection from "@/app/(clock-app)/handleAdminPageProtection";
 import { getAllUsers, isClockedIn } from "@/app/actions";
 
 export default async function Activity() {
@@ -21,7 +20,6 @@ export default async function Activity() {
     return namesOfClockedInUsers.sort();
   }
 
-  await handleAdminPageProtection();
   const clockedInUsers = await getNamesOfClockedInUsers();
   return (
     <>
