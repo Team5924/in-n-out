@@ -13,6 +13,7 @@ export default async function ClockAppLayout({
   const navBarItems = [
     { name: "Hours", href: "/hours" },
     { name: "Leaderboard", href: "/leaderboard" },
+    { name: "Activity", href: "/activity" },
   ];
 
   const session = await getServerSession(authOptions);

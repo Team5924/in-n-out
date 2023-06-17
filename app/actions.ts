@@ -60,3 +60,23 @@ export async function getHours(userEmail: string) {
     return 0;
   }
 }
+
+export async function isClockedIn(userEmail: string) {
+  const user = await prisma.user.findUnique({
+    where: { email: userEmail },
+    include: { shifts: true },
+  });
+
+  for (const shift of user?.shifts ?? []) {
+    console.log(shift.shiftEnd);
+    if (shift.shiftEnd === null) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export async function getAllUsers() {
+  return prisma.user.findMany({ select: { email: true, name: true } });
+}
