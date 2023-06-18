@@ -68,7 +68,6 @@ export async function isClockedIn(userEmail: string) {
   });
 
   for (const shift of user?.shifts ?? []) {
-    console.log(shift.shiftEnd);
     if (shift.shiftEnd === null) {
       return true;
     }
