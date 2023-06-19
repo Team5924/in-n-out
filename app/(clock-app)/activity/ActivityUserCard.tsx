@@ -7,7 +7,7 @@ export default function ActivityUserCard({
 }) {
   return (
     <div
-      className={`m-4 flex items-center justify-between rounded border-2 p-3 ${
+      className={`m-2 flex w-full items-center justify-between rounded border-2 p-3 ${
         clockedIn ? "border-white bg-[#2cb6c0]" : "border-gray-600"
       }`}
     >
