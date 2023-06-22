@@ -16,7 +16,8 @@ module.exports = {
         montserrat: ["var(--font-montserrat)"],
       },
       colors: {
-        accent: "#C0362C",
+        primary: "#C0362C",
+        secondary: "#2cb6c0",
       },
     },
     keyframes: {
