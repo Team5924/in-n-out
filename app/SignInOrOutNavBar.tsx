@@ -19,7 +19,7 @@ export default function SignInOrOutNavBar({
 }) {
   return (
     <section>
-      <nav className="flex h-14 content-center items-center justify-between bg-accent px-6">
+      <nav className="flex h-14 content-center items-center justify-between bg-primary px-6">
         <div>
           {navBarItems?.map((navBarItem, index) => (
             <Link

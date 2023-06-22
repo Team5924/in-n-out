@@ -55,7 +55,7 @@ export async function getHours(userEmail: string) {
 
   if (millisecondsClocked) {
     const hoursClocked = millisecondsClocked / 1000 / 60 / 60;
-    return parseInt(hoursClocked.toFixed(1), 10);
+    return parseFloat(hoursClocked.toFixed(1));
   } else {
     return 0;
   }
