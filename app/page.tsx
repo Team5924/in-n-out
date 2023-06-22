@@ -4,11 +4,21 @@ import SignInOrOutNavBar from "@/app/SignInOrOutNavBar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
+import { prisma } from "@/app/client";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
   if (session) {
-    redirect("/hours");
+    const { isApproved } =
+      (await prisma.user.findUnique({
+        where: { email: session.user?.email ?? "" },
+        select: { isApproved: true },
+      })) ?? {};
+    if (isApproved) {
+      redirect("/hours");
+    } else {
+      redirect("/not-approved");
+    }
   } else {
     return (
       <div>

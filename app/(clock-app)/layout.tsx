@@ -18,27 +18,32 @@ export default async function ClockAppLayout({
 
   const session = await getServerSession(authOptions);
   if (session) {
-    const { isAdmin } = (await prisma.user.findUnique({
-      where: { email: session.user?.email ?? "" },
-      select: { isAdmin: true },
-    })) ?? { isAdmin: false };
-    if (isAdmin) {
-      navBarItems.push(
-        { name: "Admin", href: "/admin" },
-        { name: "Clock-In/Out Terminal", href: "/terminal" }
+    const { isAdmin, isApproved } =
+      (await prisma.user.findUnique({
+        where: { email: session.user?.email ?? "" },
+        select: { isAdmin: true, isApproved: true },
+      })) ?? {};
+    if (isApproved) {
+      if (isAdmin) {
+        navBarItems.push(
+          { name: "Admin", href: "/admin" },
+          { name: "Clock-In/Out Terminal", href: "/terminal" }
+        );
+      }
+      return (
+        <div className="flex min-h-screen flex-col">
+          <SignInOrOutNavBar
+            navBarItems={navBarItems}
+            signOutProfileImageSrc={
+              session?.user?.image ?? "/public/default-pfp.png"
+            }
+          ></SignInOrOutNavBar>
+          {children}
+        </div>
       );
+    } else {
+      redirect("/not-approved");
     }
-    return (
-      <div className="flex min-h-screen flex-col">
-        <SignInOrOutNavBar
-          navBarItems={navBarItems}
-          signOutProfileImageSrc={
-            session?.user?.image ?? "/public/default-pfp.png"
-          }
-        ></SignInOrOutNavBar>
-        {children}
-      </div>
-    );
   } else {
     redirect("/");
   }
