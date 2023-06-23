@@ -1,8 +1,9 @@
-import { getAllUsers, getHours } from "@/app/actions";
+import { getHours, getNamesAndEmailsOfAllUsers } from "@/app/actions";
+import LeaderboardTable from "@/app/(clock-app)/leaderboard/LeaderboardTable";
 
 export default async function Leaderboard() {
   async function getNamesAndHoursOfUsers() {
-    const users = await getAllUsers();
+    const users = await getNamesAndEmailsOfAllUsers();
     const namesAndHoursOfUsers: { name: string; hours: number }[] = [];
     for (const user of users) {
       if (user.email) {
@@ -32,15 +33,14 @@ export default async function Leaderboard() {
     });
   }
 
-  const namesAndHoursOfUsers = await getNamesAndHoursOfUsers();
+  const namesAndHoursOfAllUsers = await getNamesAndHoursOfUsers();
+  const namesAndHoursOfTopTenUsers = namesAndHoursOfAllUsers.slice(0, 10);
   return (
-    <>
-      <p>Leaderboard</p>
-      {namesAndHoursOfUsers.map((nameAndHourOfUser, index) => (
-        <p key={index}>
-          {nameAndHourOfUser.name + " " + nameAndHourOfUser.hours}
-        </p>
-      ))}
-    </>
+    <div className="flex flex-col items-center">
+      <h2 className="mb-7 mt-9 text-5xl font-bold">Leaderboard</h2>
+      <LeaderboardTable
+        namesAndHoursOfUsers={namesAndHoursOfTopTenUsers}
+      ></LeaderboardTable>
+    </div>
   );
 }

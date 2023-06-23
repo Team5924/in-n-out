@@ -76,6 +76,6 @@ export async function isClockedIn(userEmail: string) {
   return false;
 }
 
-export async function getAllUsers() {
+export async function getNamesAndEmailsOfAllUsers() {
   return prisma.user.findMany({ select: { email: true, name: true } });
 }

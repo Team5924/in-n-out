@@ -1,4 +1,4 @@
-import { getAllUsers, isClockedIn } from "@/app/actions";
+import { getNamesAndEmailsOfAllUsers, isClockedIn } from "@/app/actions";
 import ActivityUserCard from "@/app/(clock-app)/activity/ActivityUserCard";
 
 export default async function Activity() {
@@ -8,7 +8,7 @@ export default async function Activity() {
   };
 
   async function getNamesOfClockedInAndOutUsers() {
-    const users = await getAllUsers();
+    const users = await getNamesAndEmailsOfAllUsers();
     const namesOfClockedInUsers: User[] = [];
     const namesOfClockedOutUsers: User[] = [];
     for (const user of users) {
