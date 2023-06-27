@@ -49,3 +49,10 @@ export async function isClockedIn(userEmail: string) {
 export async function getNamesAndEmailsOfAllUsers() {
   return prisma.user.findMany({ select: { email: true, name: true } });
 }
+
+export async function getNamesAndEmailsOfUnapprovedUsers() {
+  return prisma.user.findMany({
+    select: { email: true, name: true },
+    where: { isApproved: false },
+  });
+}

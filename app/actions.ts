@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/app/client";
+import { revalidatePath } from "next/cache";
 
 export async function toggleClockStatus(userEmail: string) {
   const user = await prisma.user.findUnique({
@@ -28,4 +29,19 @@ export async function toggleClockStatus(userEmail: string) {
       where: { id: latestShift.id },
     });
   }
+}
+
+export async function approveUser(userEmail: string) {
+  await prisma.user.update({
+    where: { email: userEmail },
+    data: { isApproved: true },
+  });
+  revalidatePath("/admin");
+}
+
+export async function rejectUser(userEmail: string) {
+  await prisma.user.delete({
+    where: { email: userEmail },
+  });
+  revalidatePath("/admin");
 }
