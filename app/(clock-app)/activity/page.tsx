@@ -1,4 +1,7 @@
-import { getNamesAndEmailsOfAllUsers, isClockedIn } from "@/app/actions";
+import {
+  getNamesAndEmailsOfAllUsers,
+  isClockedIn,
+} from "@/app/(clock-app)/reads";
 import ActivityUserCard from "@/app/(clock-app)/activity/ActivityUserCard";
 
 export default async function Activity() {
