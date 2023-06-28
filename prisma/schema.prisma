@@ -62,6 +62,6 @@ model Shift {
   id         String    @id @default(uuid())
   shiftStart DateTime  @default(now())
   shiftEnd   DateTime?
-  user       User      @relation(fields: [userId], references: [id])
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
 }
