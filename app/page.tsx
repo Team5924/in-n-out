@@ -23,7 +23,7 @@ export default async function Home() {
     return (
       <div>
         <SignInOrOutNavBar></SignInOrOutNavBar>
-        <div className="flex flex-col items-center">
+        <div className="mt-11 flex flex-col items-center sm:mt-5 md:mt-0">
           <Image
             src={inNOutLogo}
             alt="In-N-Out Logo"
