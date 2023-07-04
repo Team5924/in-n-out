@@ -9,14 +9,18 @@ export default async function Admin() {
   return (
     <div className="flex flex-col items-center">
       <h2 className="mb-14 mt-9 text-5xl font-bold">Admin</h2>
-      <h3 className="mb-3 text-2xl font-semibold">Account Requests</h3>
-      {namesAndEmailsOfUnapprovedUsers.map((nameAndEmailOfUser, index) => (
-        <AccountRequestUserCard
-          key={index}
-          name={nameAndEmailOfUser.name ?? ""}
-          email={nameAndEmailOfUser.email ?? ""}
-        ></AccountRequestUserCard>
-      ))}
+      <h3 className="mb-3 text-3xl font-semibold">Account Requests</h3>
+      {namesAndEmailsOfUnapprovedUsers.length === 0 ? (
+        <p>No Requests</p>
+      ) : (
+        namesAndEmailsOfUnapprovedUsers.map((nameAndEmailOfUser, index) => (
+          <AccountRequestUserCard
+            key={index}
+            name={nameAndEmailOfUser.name ?? ""}
+            email={nameAndEmailOfUser.email ?? ""}
+          ></AccountRequestUserCard>
+        ))
+      )}
     </div>
   );
 }
