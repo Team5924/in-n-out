@@ -2,7 +2,7 @@
 
 import { NavBarItem } from "@/app/SignInHorizontalNavBar";
 import ProfilePictureSignOut from "@/app/ProfilePictureSignOut";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { FiMenu } from "react-icons/fi";
 import React, { useState } from "react";
 import Link from "next/link";
 
@@ -35,10 +35,10 @@ export default function SignOutVerticalNavBar({
               rightSide={false}
             ></ProfilePictureSignOut>
           )}
-          <RxHamburgerMenu
-            className="h-7 w-7"
+          <FiMenu
+            className="h-8 w-8 stroke-white transition-colors hover:stroke-yellow-300"
             onClick={() => setMenuOpen(!menuOpen)}
-          ></RxHamburgerMenu>
+          ></FiMenu>
         </div>
         {menuOpen &&
           navBarItems?.map((navBarItem, index) => (
