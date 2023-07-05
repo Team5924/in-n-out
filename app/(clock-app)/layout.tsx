@@ -2,8 +2,9 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
-import SignInOrOutNavBar from "@/app/SignInOrOutNavBar";
+import SignOutHorizontalNavBar from "@/app/SignOutHorizontalNavBar";
 import { prisma } from "@/app/client";
+import SignOutVerticalNavBar from "@/app/SignOutVerticalNavBar";
 
 export default async function ClockAppLayout({
   children, // will be a page or nested layout
@@ -32,12 +33,18 @@ export default async function ClockAppLayout({
       }
       return (
         <div className="flex min-h-screen flex-col">
-          <SignInOrOutNavBar
+          <SignOutHorizontalNavBar
             navBarItems={navBarItems}
             signOutProfileImageSrc={
               session?.user?.image ?? "/public/default-pfp.png"
             }
-          ></SignInOrOutNavBar>
+          ></SignOutHorizontalNavBar>
+          <SignOutVerticalNavBar
+            navBarItems={navBarItems}
+            signOutProfileImageSrc={
+              session?.user?.image ?? "/public/default-pfp.png"
+            }
+          ></SignOutVerticalNavBar>
           {children}
         </div>
       );

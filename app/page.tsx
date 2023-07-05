@@ -1,6 +1,6 @@
 import Image from "next/image";
 import inNOutLogo from "/public/in-n-out.png";
-import SignInOrOutNavBar from "@/app/SignInOrOutNavBar";
+import SignInHorizontalNavBar from "@/app/SignInHorizontalNavBar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
@@ -22,7 +22,7 @@ export default async function Home() {
   } else {
     return (
       <div>
-        <SignInOrOutNavBar></SignInOrOutNavBar>
+        <SignInHorizontalNavBar></SignInHorizontalNavBar>
         <div className="mt-11 flex flex-col items-center sm:mt-5 md:mt-0">
           <Image
             src={inNOutLogo}

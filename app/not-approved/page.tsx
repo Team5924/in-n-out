@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { prisma } from "@/app/client";
 import { redirect } from "next/navigation";
-import SignInOrOutNavBar from "@/app/SignInOrOutNavBar";
+import SignOutHorizontalNavBar from "@/app/SignOutHorizontalNavBar";
 
 export default async function NotApproved() {
   const session = await getServerSession(authOptions);
@@ -17,9 +17,9 @@ export default async function NotApproved() {
     } else {
       return (
         <>
-          <SignInOrOutNavBar
+          <SignOutHorizontalNavBar
             signOutProfileImageSrc={session.user?.image ?? ""}
-          ></SignInOrOutNavBar>
+          ></SignOutHorizontalNavBar>
           <h1 className="mx-4 my-7 text-5xl font-bold">
             Waiting For Account Approval
           </h1>

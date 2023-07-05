@@ -1,6 +1,5 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import ProfilePictureSignOut from "@/app/ProfilePictureSignOut";
@@ -10,15 +9,23 @@ export type NavBarItem = {
   href: string;
 };
 
-export default function SignInOrOutNavBar({
+export default function SignOutHorizontalNavBar({
   navBarItems,
   signOutProfileImageSrc,
 }: {
   navBarItems?: NavBarItem[];
-  signOutProfileImageSrc?: string;
+  signOutProfileImageSrc: string;
 }) {
+  let display = "";
+  if (navBarItems) {
+    if (navBarItems.length >= 5) {
+      display = "hidden lg:block";
+    } else if (navBarItems.length >= 3) {
+      display = "hidden md:block";
+    }
+  }
   return (
-    <section>
+    <section className={display}>
       <nav className="flex h-14 content-center items-center justify-between bg-primary px-6">
         <div>
           {navBarItems?.map((navBarItem, index) => (
@@ -32,18 +39,10 @@ export default function SignInOrOutNavBar({
           ))}
         </div>
         <div>
-          {signOutProfileImageSrc ? (
-            <ProfilePictureSignOut
-              signOutProfileImageSrc={signOutProfileImageSrc}
-            ></ProfilePictureSignOut>
-          ) : (
-            <p
-              className="mx-7 text-xl font-bold transition-colors hover:text-yellow-300"
-              onClick={() => signIn("google")}
-            >
-              Sign In
-            </p>
-          )}
+          <ProfilePictureSignOut
+            signOutProfileImageSrc={signOutProfileImageSrc}
+            rightSide={true}
+          ></ProfilePictureSignOut>
         </div>
       </nav>
     </section>
