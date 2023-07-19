@@ -12,14 +12,18 @@ export default async function NotApproved() {
         where: { email: session.user?.email ?? "" },
         select: { isApproved: true },
       })) ?? {};
+    const { schoolId } =
+      (await prisma.user.findUnique({
+        where: { email: session.user?.email ?? "" },
+        select: { schoolId: true },
+      })) ?? {};
     if (isApproved) {
-      redirect("/hours");
+      if (schoolId) {
+        redirect("/hours");
+      } else {
+        redirect("/no-school-id");
+      }
     } else {
-      const { schoolId } =
-        (await prisma.user.findUnique({
-          where: { email: session.user?.email ?? "" },
-          select: { schoolId: true },
-        })) ?? {};
       if (schoolId) {
         return (
           <>

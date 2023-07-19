@@ -19,41 +19,40 @@ export default async function ClockAppLayout({
 
   const session = await getServerSession(authOptions);
   if (session) {
-    const { isAdmin, isApproved } =
+    const { isAdmin, isApproved, schoolId } =
       (await prisma.user.findUnique({
         where: { email: session.user?.email ?? "" },
-        select: { isAdmin: true, isApproved: true },
+        select: { isAdmin: true, isApproved: true, schoolId: true },
       })) ?? {};
     if (isApproved) {
-      if (isAdmin) {
-        navBarItems.push(
-          { name: "Admin", href: "/admin" },
-          { name: "Clock-In/Out Terminal", href: "/terminal" },
+      if (schoolId) {
+        if (isAdmin) {
+          navBarItems.push(
+            { name: "Admin", href: "/admin" },
+            { name: "Clock-In/Out Terminal", href: "/terminal" },
+          );
+        }
+        return (
+          <div className="flex min-h-screen flex-col">
+            <SignOutHorizontalNavBar
+              navBarItems={navBarItems}
+              signOutProfileImageSrc={
+                session?.user?.image ?? "/public/default-pfp.png"
+              }
+            ></SignOutHorizontalNavBar>
+            <SignOutVerticalNavBar
+              navBarItems={navBarItems}
+              signOutProfileImageSrc={
+                session?.user?.image ?? "/public/default-pfp.png"
+              }
+            ></SignOutVerticalNavBar>
+            {children}
+          </div>
         );
+      } else {
+        redirect("no-school-id");
       }
-      return (
-        <div className="flex min-h-screen flex-col">
-          <SignOutHorizontalNavBar
-            navBarItems={navBarItems}
-            signOutProfileImageSrc={
-              session?.user?.image ?? "/public/default-pfp.png"
-            }
-          ></SignOutHorizontalNavBar>
-          <SignOutVerticalNavBar
-            navBarItems={navBarItems}
-            signOutProfileImageSrc={
-              session?.user?.image ?? "/public/default-pfp.png"
-            }
-          ></SignOutVerticalNavBar>
-          {children}
-        </div>
-      );
     } else {
-      const { schoolId } =
-        (await prisma.user.findUnique({
-          where: { email: session.user?.email ?? "" },
-          select: { schoolId: true },
-        })) ?? {};
       if (schoolId) {
         redirect("/not-approved");
       } else {
