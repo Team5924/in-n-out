@@ -68,3 +68,14 @@ export async function rejectUser(userEmail: string) {
     revalidatePath("/admin");
   }
 }
+
+export async function setUserSchoolId(schoolId: number) {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    const userCallingEmail = session?.user?.email ?? "";
+    await prisma.user.update({
+      where: { email: userCallingEmail },
+      data: { schoolId: schoolId },
+    });
+  }
+}

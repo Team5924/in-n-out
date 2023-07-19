@@ -17,7 +17,16 @@ export default async function Home() {
     if (isApproved) {
       redirect("/hours");
     } else {
-      redirect("/not-approved");
+      const { schoolId } =
+        (await prisma.user.findUnique({
+          where: { email: session.user?.email ?? "" },
+          select: { schoolId: true },
+        })) ?? {};
+      if (schoolId) {
+        redirect("/not-approved");
+      } else {
+        redirect("/no-school-id");
+      }
     }
   } else {
     return (

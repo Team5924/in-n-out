@@ -28,7 +28,7 @@ export default async function ClockAppLayout({
       if (isAdmin) {
         navBarItems.push(
           { name: "Admin", href: "/admin" },
-          { name: "Clock-In/Out Terminal", href: "/terminal" }
+          { name: "Clock-In/Out Terminal", href: "/terminal" },
         );
       }
       return (
@@ -49,7 +49,16 @@ export default async function ClockAppLayout({
         </div>
       );
     } else {
-      redirect("/not-approved");
+      const { schoolId } =
+        (await prisma.user.findUnique({
+          where: { email: session.user?.email ?? "" },
+          select: { schoolId: true },
+        })) ?? {};
+      if (schoolId) {
+        redirect("/not-approved");
+      } else {
+        redirect("/no-school-id");
+      }
     }
   } else {
     redirect("/");
