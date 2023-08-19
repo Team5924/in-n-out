@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/app/client";
-import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
@@ -94,11 +93,10 @@ export async function approveUser(userEmail: string) {
       where: { email: userEmail },
       data: { isApproved: true },
     });
-    revalidatePath("/admin");
   }
 }
 
-export async function rejectUser(userEmail: string) {
+export async function deleteUser(userEmail: string) {
   const session = await getServerSession(authOptions);
   const userCallingEmail = session?.user?.email ?? "";
   const userCalling = await prisma.user.findUnique({
@@ -108,7 +106,6 @@ export async function rejectUser(userEmail: string) {
     await prisma.user.delete({
       where: { email: userEmail },
     });
-    revalidatePath("/admin");
   }
 }
 
