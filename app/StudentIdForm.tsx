@@ -1,10 +1,13 @@
-"use client";
-
 import { useRef, useState } from "react";
-import { setUserSchoolId } from "@/app/actions";
 import { redirect } from "next/navigation";
 
-export default function StudentIdForm() {
+export default function StudentIdForm({
+  onSubmit,
+  center,
+}: {
+  onSubmit: (schoolId: number) => Promise<boolean>;
+  center: boolean;
+}) {
   const formRef = useRef<HTMLFormElement>(null);
   const [isErrorShowing, setErrorShowing] = useState(false);
 
@@ -13,9 +16,9 @@ export default function StudentIdForm() {
     if (typeof schoolId === "string") {
       if (/^\d+$/.test(schoolId)) {
         const schoolIdNum = parseInt(schoolId);
-        await setUserSchoolId(schoolIdNum);
-        console.log(schoolIdNum);
-        redirect("/not-approved");
+        if (await onSubmit(schoolIdNum)) {
+          redirect("/not-approved");
+        }
       } else {
         setErrorShowing(true);
       }
@@ -23,7 +26,10 @@ export default function StudentIdForm() {
   }
 
   return (
-    <form action={handleSubmit}>
+    <form
+      action={handleSubmit}
+      className={`${center ? "flex flex-col items-center" : ""}`}
+    >
       <input
         className="block mx-4 mb-3 text-black rounded-md px-px py-0.5 outline-yellow-300"
         placeholder="School ID #"

@@ -1,5 +1,10 @@
 import { prisma } from "@/app/client";
 
+type User = {
+  name: string;
+  clockedIn: boolean;
+};
+
 export async function getHours(userEmail: string) {
   const user = await prisma.user.findUnique({
     where: { email: userEmail },
@@ -20,7 +25,7 @@ export async function getHours(userEmail: string) {
         );
       }
     },
-    0
+    0,
   );
 
   if (millisecondsClocked) {
@@ -48,6 +53,32 @@ export async function isClockedIn(userEmail: string) {
 
 export async function getNamesAndEmailsOfAllUsers() {
   return prisma.user.findMany({ select: { email: true, name: true } });
+}
+
+export async function getNamesOfClockedInAndOutUsers() {
+  const users = await getNamesAndEmailsOfAllUsers();
+  const namesOfClockedInUsers: User[] = [];
+  const namesOfClockedOutUsers: User[] = [];
+  for (const user of users) {
+    if (user.email) {
+      const userClockedIn = await isClockedIn(user.email);
+      if (userClockedIn) {
+        if (user.name) {
+          namesOfClockedInUsers.push({ name: user.name, clockedIn: true });
+        } else {
+          namesOfClockedInUsers.push({ name: user.email, clockedIn: true });
+        }
+      } else {
+        if (user.name) {
+          namesOfClockedOutUsers.push({ name: user.name, clockedIn: false });
+        } else {
+          namesOfClockedOutUsers.push({ name: user.email, clockedIn: false });
+        }
+      }
+    }
+  }
+
+  return [...namesOfClockedInUsers.sort(), ...namesOfClockedOutUsers.sort()];
 }
 
 export async function getNamesAndEmailsOfUnapprovedUsers() {
