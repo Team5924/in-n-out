@@ -34,12 +34,11 @@ export default async function Leaderboard() {
   }
 
   const namesAndHoursOfAllUsers = await getNamesAndHoursOfUsers();
-  const namesAndHoursOfTopTenUsers = namesAndHoursOfAllUsers.slice(0, 10);
   return (
     <div className="flex flex-col items-center">
       <h2 className="mb-7 mt-9 text-5xl font-bold">Leaderboard</h2>
       <LeaderboardTable
-        namesAndHoursOfUsers={namesAndHoursOfTopTenUsers}
+        namesAndHoursOfUsers={namesAndHoursOfAllUsers}
       ></LeaderboardTable>
     </div>
   );
