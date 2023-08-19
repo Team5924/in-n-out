@@ -16,18 +16,6 @@ export async function clockIn(userEmail: string) {
       include: { shifts: true },
     });
 
-    const latestShift =
-      userToClockIn?.shifts.length && userToClockIn?.shifts.length > 0
-        ? userToClockIn?.shifts.reduce(
-            (newestShift, currentShift) => {
-              return currentShift.shiftStart.getTime() >
-                newestShift.shiftStart.getTime()
-                ? currentShift
-                : newestShift;
-            },
-            userToClockIn?.shifts[0],
-          )
-        : null;
     if (userToClockIn) {
       await prisma.shift.create({ data: { userId: userToClockIn.id } });
     }
