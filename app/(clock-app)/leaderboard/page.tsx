@@ -1,9 +1,12 @@
-import { getHours, getNamesAndEmailsOfAllUsers } from "@/app/(clock-app)/reads";
+import {
+  getHours,
+  getNamesAndEmailsOfApprovedUsers,
+} from "@/app/(clock-app)/reads";
 import LeaderboardTable from "@/app/(clock-app)/leaderboard/LeaderboardTable";
 
 export default async function Leaderboard() {
   async function getNamesAndHoursOfUsers() {
-    const users = await getNamesAndEmailsOfAllUsers();
+    const users = await getNamesAndEmailsOfApprovedUsers();
     const namesAndHoursOfUsers: { name: string; hours: number }[] = [];
     for (const user of users) {
       if (user.email) {
