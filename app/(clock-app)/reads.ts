@@ -51,15 +51,8 @@ export async function isClockedIn(userEmail: string) {
   return false;
 }
 
-export async function getNamesAndEmailsOfAllUsers() {
-  return prisma.user.findMany({
-    where: { isApproved: true },
-    select: { email: true, name: true },
-  });
-}
-
 export async function getNamesOfClockedInAndOutUsers() {
-  const users = await getNamesAndEmailsOfAllUsers();
+  const users = await getNamesAndEmailsOfApprovedUsers();
   const namesOfClockedInUsers: User[] = [];
   const namesOfClockedOutUsers: User[] = [];
   for (const user of users) {
@@ -82,6 +75,13 @@ export async function getNamesOfClockedInAndOutUsers() {
   }
 
   return [...namesOfClockedInUsers.sort(), ...namesOfClockedOutUsers.sort()];
+}
+
+export async function getNamesAndEmailsOfApprovedUsers() {
+  return prisma.user.findMany({
+    where: { isApproved: true },
+    select: { email: true, name: true },
+  });
 }
 
 export async function getNamesAndEmailsOfUnapprovedUsers() {
