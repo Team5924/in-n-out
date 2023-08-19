@@ -3,6 +3,7 @@
 import { prisma } from "@/app/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { revalidatePath } from "next/cache";
 
 export async function clockIn(userEmail: string) {
   const session = await getServerSession(authOptions);
@@ -81,6 +82,7 @@ export async function approveUser(userEmail: string) {
       where: { email: userEmail },
       data: { isApproved: true },
     });
+    revalidatePath("/admin");
   }
 }
 
@@ -94,6 +96,7 @@ export async function deleteUser(userEmail: string) {
     await prisma.user.delete({
       where: { email: userEmail },
     });
+    revalidatePath("/admin");
   }
 }
 
