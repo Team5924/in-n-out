@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { redirect } from "next/navigation";
 
 export default function StudentIdForm({
@@ -8,7 +8,6 @@ export default function StudentIdForm({
   onSubmit: (schoolId: number) => Promise<boolean>;
   center: boolean;
 }) {
-  const formRef = useRef<HTMLFormElement>(null);
   const [isErrorShowing, setErrorShowing] = useState(false);
 
   async function handleSubmit(formData: FormData) {
