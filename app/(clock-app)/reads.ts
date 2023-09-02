@@ -1,10 +1,5 @@
 import { prisma } from "@/app/client";
 
-type User = {
-  name: string;
-  clockedIn: boolean;
-};
-
 export async function getHours(userEmail: string) {
   const user = await prisma.user.findUnique({
     where: { email: userEmail },
@@ -36,6 +31,24 @@ export async function getHours(userEmail: string) {
   }
 }
 
+export async function getCurrentSessionHours(userEmail: string) {
+  const user = await prisma.user.findUnique({
+    where: { email: userEmail },
+    include: { shifts: true },
+  });
+
+  for (const shift of user?.shifts ?? []) {
+    if (shift.shiftEnd === null) {
+      const currentSessionMilliseconds =
+        Date.now() - shift.shiftStart.getTime();
+      const currentSessionHours = currentSessionMilliseconds / 1000 / 60 / 60;
+      return parseFloat(currentSessionHours.toFixed(1));
+    }
+  }
+
+  return 0;
+}
+
 export async function isClockedIn(userEmail: string) {
   const user = await prisma.user.findUnique({
     where: { email: userEmail },
@@ -49,32 +62,6 @@ export async function isClockedIn(userEmail: string) {
   }
 
   return false;
-}
-
-export async function getNamesOfClockedInAndOutUsers() {
-  const users = await getNamesAndEmailsOfApprovedUsers();
-  const namesOfClockedInUsers: User[] = [];
-  const namesOfClockedOutUsers: User[] = [];
-  for (const user of users) {
-    if (user.email) {
-      const userClockedIn = await isClockedIn(user.email);
-      if (userClockedIn) {
-        if (user.name) {
-          namesOfClockedInUsers.push({ name: user.name, clockedIn: true });
-        } else {
-          namesOfClockedInUsers.push({ name: user.email, clockedIn: true });
-        }
-      } else {
-        if (user.name) {
-          namesOfClockedOutUsers.push({ name: user.name, clockedIn: false });
-        } else {
-          namesOfClockedOutUsers.push({ name: user.email, clockedIn: false });
-        }
-      }
-    }
-  }
-
-  return [...namesOfClockedInUsers.sort(), ...namesOfClockedOutUsers.sort()];
 }
 
 export async function getNamesAndEmailsOfApprovedUsers() {
