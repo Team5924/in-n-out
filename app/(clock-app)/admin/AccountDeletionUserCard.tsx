@@ -13,7 +13,7 @@ export default function AccountDeletionUserCard({
   email: string;
 }) {
   const [confirmationOpen, setConfirmationOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   return (
     <>
