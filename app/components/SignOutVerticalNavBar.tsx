@@ -1,7 +1,7 @@
 "use client";
 
-import { NavBarItem } from "@/app/SignInHorizontalNavBar";
-import ProfilePictureSignOut from "@/app/ProfilePictureSignOut";
+import { NavBarItem } from "@/app/components/SignInHorizontalNavBar";
+import ProfilePictureSignOut from "@/app/components/ProfilePictureSignOut";
 import { FiMenu } from "react-icons/fi";
 import React, { useState } from "react";
 import Link from "next/link";
@@ -21,6 +21,8 @@ export default function SignOutVerticalNavBar({
       display += "lg:hidden";
     } else if (navBarItems.length >= 3) {
       display += "md:hidden";
+    } else {
+      display = "hidden";
     }
   } else {
     display = "hidden";

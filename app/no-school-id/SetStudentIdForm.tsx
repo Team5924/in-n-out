@@ -1,6 +1,6 @@
 "use client";
 
-import StudentIdForm from "@/app/StudentIdForm";
+import StudentIdForm from "@/app/components/StudentIdForm";
 import { setUserSchoolId } from "@/app/actions";
 
 export default function SetStudentIdForm() {

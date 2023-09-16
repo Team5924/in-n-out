@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
-import ProfilePictureSignOut from "@/app/ProfilePictureSignOut";
+import ProfilePictureSignOut from "@/app/components/ProfilePictureSignOut";
 
 export type NavBarItem = {
   name: string;

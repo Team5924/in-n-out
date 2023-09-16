@@ -6,7 +6,7 @@ export default async function Hours() {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className="flex flex-grow flex-col items-center justify-center">
+    <div className="flex flex-grow flex-col items-center justify-center h-[90vh]">
       <h2 className="mb-9 text-5xl font-bold">
         Hello {session?.user?.name?.split(" ")[0]},
       </h2>

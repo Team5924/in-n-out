@@ -1,4 +1,4 @@
-import StudentIdForm from "@/app/StudentIdForm";
+import StudentIdForm from "@/app/components/StudentIdForm";
 
 export default function LoginWithStudentIdForm({
   onSubmit,
