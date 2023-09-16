@@ -47,6 +47,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   isAdmin       Boolean   @default(false)
+  isTerminal    Boolean   @default(false)
   isApproved    Boolean   @default(false)
   shifts        Shift[]
 }
