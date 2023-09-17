@@ -1,4 +1,4 @@
-import ActivityUserCard from "@/app/(clock-app)/activity/ActivityUserCard";
+import ActivityUserCard from "@/app/(clock-app)/(regular-users)/activity/ActivityUserCard";
 import {
   getCurrentSessionHours,
   getNamesAndEmailsOfApprovedUsers,

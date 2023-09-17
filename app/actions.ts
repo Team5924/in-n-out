@@ -11,7 +11,7 @@ export async function clockIn(userEmail: string) {
   const userCalling = await prisma.user.findUnique({
     where: { email: userCallingEmail },
   });
-  if (userCalling?.isAdmin) {
+  if (userCalling?.isTerminal) {
     const userToClockIn = await prisma.user.findUnique({
       where: { email: userEmail },
       include: { shifts: true },
@@ -29,22 +29,22 @@ export async function clockOut(userEmail: string) {
   const userCalling = await prisma.user.findUnique({
     where: { email: userCallingEmail },
   });
-  if (userCalling?.isAdmin) {
-    const userToClockIn = await prisma.user.findUnique({
+  if (userCalling?.isTerminal) {
+    const userToClockOut = await prisma.user.findUnique({
       where: { email: userEmail },
       include: { shifts: true },
     });
 
     const latestShift =
-      userToClockIn?.shifts.length && userToClockIn?.shifts.length > 0
-        ? userToClockIn?.shifts.reduce(
+      userToClockOut?.shifts.length && userToClockOut?.shifts.length > 0
+        ? userToClockOut?.shifts.reduce(
             (newestShift, currentShift) => {
               return currentShift.shiftStart.getTime() >
                 newestShift.shiftStart.getTime()
                 ? currentShift
                 : newestShift;
             },
-            userToClockIn?.shifts[0],
+            userToClockOut?.shifts[0],
           )
         : null;
     if (latestShift) {
@@ -117,7 +117,7 @@ export async function getUserNameAndEmailBySchoolId(schoolId: number) {
   const userCalling = await prisma.user.findUnique({
     where: { email: userCallingEmail },
   });
-  if (userCalling?.isAdmin) {
+  if (userCalling?.isAdmin || userCalling?.isTerminal) {
     return (
       (await prisma.user.findUnique({
         where: { schoolId: schoolId },

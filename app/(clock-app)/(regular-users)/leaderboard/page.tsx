@@ -2,7 +2,7 @@ import {
   getHours,
   getNamesAndEmailsOfApprovedUsers,
 } from "@/app/(clock-app)/reads";
-import LeaderboardTable from "@/app/(clock-app)/leaderboard/LeaderboardTable";
+import LeaderboardTable from "@/app/(clock-app)/(regular-users)/leaderboard/LeaderboardTable";
 
 export default async function Leaderboard() {
   async function getNamesAndHoursOfUsers() {

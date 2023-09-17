@@ -5,6 +5,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { prisma } from "@/app/client";
 import NavBar from "@/app/components/NavBar";
 import React from "react";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -19,6 +20,17 @@ export default async function Home() {
       },
     })) ?? {};
 
+  // Block if logged in and not terminal and either no school id or not approved
+  // If no school id redirect to set-school-id
+  // If not approved redirect to not-approved
+  if (session && !isTerminal) {
+    if (!schoolId) {
+      redirect("/set-school-id");
+    }
+    if (!isApproved) {
+      redirect("/not-approved");
+    }
+  }
   return (
     <div>
       <NavBar

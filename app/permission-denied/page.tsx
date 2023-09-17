@@ -17,6 +17,7 @@ export default async function PermissionDenied() {
       },
     })) ?? {};
 
+  // All can access
   return (
     <>
       <NavBar
