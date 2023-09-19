@@ -30,10 +30,7 @@ export default async function NavBar({
         { name: "Activity", href: "/activity" },
       );
       if (isAdmin) {
-        navBarItems.push(
-          { name: "Admin", href: "/admin" },
-          { name: "Clock-In/Out Terminal", href: "/terminal" },
-        );
+        navBarItems.push({ name: "Admin", href: "/admin" });
       }
     }
 
