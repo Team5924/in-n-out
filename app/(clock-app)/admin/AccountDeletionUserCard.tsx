@@ -36,7 +36,10 @@ export default function AccountDeletionUserCard({
             <div className="flex items-center justify-center mt-7">
               <BsCheckLg
                 className="m-1 h-[3.6em] w-[3.6em] fill-gray-200 transition-all hover:scale-125 hover:fill-green-700"
-                onClick={() => startTransition(() => deleteUser(email))}
+                onClick={() => {
+                  setConfirmationOpen(false);
+                  startTransition(() => deleteUser(email));
+                }}
               ></BsCheckLg>
               <BsXLg
                 className="m-1 h-[2.8em] w-[2.8em] fill-gray-200 transition-all hover:scale-125 hover:fill-red-700"
