@@ -3,7 +3,7 @@ import {
   getCurrentSessionHours,
   getNamesAndEmailsOfApprovedUsers,
   isClockedIn,
-} from "@/app/(clock-app)/reads";
+} from "@/app/reads";
 
 export default async function Activity() {
   const approvedUsers = await getNamesAndEmailsOfApprovedUsers();

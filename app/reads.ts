@@ -77,3 +77,15 @@ export async function getNamesAndEmailsOfUnapprovedUsers() {
     where: { isApproved: false },
   });
 }
+
+export async function getRecentCompletedShifts() {
+  const shifts = await prisma.shift.findMany({ include: { user: true } });
+  const recentlyCompletedShifts = shifts.filter(
+    (shift) =>
+      shift.shiftEnd &&
+      shift.shiftEnd.getTime() >= Date.now() - 1000 * 60 * 60 * 24,
+  );
+  return recentlyCompletedShifts.sort(
+    (a, b) => (b.shiftEnd?.getTime() ?? 0) - (a.shiftEnd?.getTime() ?? 0),
+  );
+}

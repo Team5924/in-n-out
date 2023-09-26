@@ -1,7 +1,7 @@
 import {
   getNamesAndEmailsOfApprovedUsers,
   getNamesAndEmailsOfUnapprovedUsers,
-} from "@/app/(clock-app)/reads";
+} from "@/app/reads";
 import AccountRequestUserCard from "@/app/(clock-app)/admin/AccountRequestUserCard";
 import AccountDeletionUserCard from "@/app/(clock-app)/admin/AccountDeletionUserCard";
 import { getServerSession } from "next-auth";
