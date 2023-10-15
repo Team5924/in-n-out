@@ -46,5 +46,5 @@ jobs:
           key: ${{ secrets.DEV_SERVER_DEPLOY_KEY }}
           port: ${{ secrets.DEV_SERVER_SSH_PORT }}
           script: |
-            ls -al
+            nvm use --lts
             pm2 restart clock-app-dev
