@@ -46,5 +46,5 @@ jobs:
           key: ${{ secrets.DEV_SERVER_DEPLOY_KEY }}
           port: ${{ secrets.DEV_SERVER_SSH_PORT }}
           script: |
-            export PATH=$PATH:/home/ubuntu/.nvm/versions/node/v18.17.1/bin/pm2
+            export PATH=$PATH:/home/deploy/.nvm/versions/node/v18.17.1/bin/pm2
             pm2 restart clock-app-dev
