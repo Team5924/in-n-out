@@ -1,0 +1,50 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Install deps
+        run: npm ci
+      - name: Build next.js app
+        run: npm run build --if-present
+      - name: Deploy to Staging server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.PROD_SERVER_DEPLOY_KEY }}
+          ARGS: "-rlgoDzvc -i"
+          SOURCE: "."
+          REMOTE_HOST: ${{ secrets.PROD_SERVER_HOST }}
+          REMOTE_PORT: ${{ secrets.PROD_SERVER_SSH_PORT }}
+          REMOTE_USER: ${{ secrets.PROD_SERVER_USER }}
+          TARGET: ${{ secrets.PROD_SERVER_CLOCK_TARGET }}
+          EXCLUDE: "/node_modules/"
+          SCRIPT_BEFORE: |
+            whoami
+            ls -al
+          SCRIPT_AFTER: |
+            whoami
+            ls -al
+            echo $RSYNC_STDOUT
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.PROD_SERVER_HOST }}
+          username: ${{ secrets.PROD_SERVER_USER }}
+          key: ${{ secrets.PROD_SERVER_DEPLOY_KEY }}
+          port: ${{ secrets.PROD_SERVER_SSH_PORT }}
+          script: |
+            nvm use --lts
+            pm2 restart clock-app
