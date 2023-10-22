@@ -34,6 +34,7 @@ export default function StudentIdForm({
         placeholder="School ID #"
         name="schoolId"
         maxLength={6}
+        autoFocus
       />
       {isErrorShowing && (
         <p className="mx-4 my-3 text-red-600">
