@@ -1,11 +1,23 @@
 import ActivityUserCard from "@/app/(clock-app)/(regular-users)/activity/ActivityUserCard";
+import { prisma } from "@/app/client";
 import {
   getCurrentSessionHours,
   getNamesAndEmailsOfApprovedUsers,
   isClockedIn,
 } from "@/app/reads";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 export default async function Activity() {
+  const session = await getServerSession(authOptions);
+  const { isAdmin } =
+    (await prisma.user.findUnique({
+      where: { email: session?.user?.email ?? "" },
+      select: {
+        isAdmin: true
+      },
+    })) ?? {};
+
   const approvedUsers = await getNamesAndEmailsOfApprovedUsers();
   const overClockedInUsers: {
     name: string | null;
@@ -58,6 +70,7 @@ export default async function Activity() {
         <ActivityUserCard
           name={user.name ?? ""}
           clockStatus="over-clocked"
+          isAdmin={isAdmin ?? false}
           key={index}
         ></ActivityUserCard>
       ))}
@@ -65,6 +78,7 @@ export default async function Activity() {
         <ActivityUserCard
           name={user.name ?? ""}
           clockStatus="clocked-in"
+          isAdmin={isAdmin ?? false}
           key={index}
         ></ActivityUserCard>
       ))}
@@ -72,6 +86,7 @@ export default async function Activity() {
         <ActivityUserCard
           name={user.name ?? ""}
           clockStatus="clocked-out"
+          isAdmin={isAdmin ?? false}
           key={index}
         ></ActivityUserCard>
       ))}
